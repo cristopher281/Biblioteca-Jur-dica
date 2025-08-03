@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Derecho de Nicaragua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #003366;
+            --secondary: #8B0000;
+            --accent: #D4AF37;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #e3f2fd;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), #001a33);
+            color: white;
+            padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .logo-subtext {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after,
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 5%;
+            position: relative;
+            color: white;
+            background: linear-gradient(rgba(0, 20, 40, 0.85), rgba(0, 20, 40, 0.9)), url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            z-index: 10;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+        
+        .search-container {
+            max-width: 700px;
+            width: 100%;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 18px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-container button:hover {
+            background: #002244;
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            padding: 0 20px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* Cards Layout */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            margin-bottom: 4rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+        
+        .card-header h3 {
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        
+        .card-header i {
+            color: var(--accent);
+        }
+        
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .law-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .law-list li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+        }
+        
+        .law-list li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .law-item {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .law-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .law-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .card-footer {
+            margin-top: auto;
+            padding: 15px 25px;
+            background: var(--light-blue);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .law-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .law-link:hover {
+            color: var(--secondary);
+        }
+        
+        .law-link i {
+            transition: all 0.3s ease;
+        }
+        
+        .law-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #001a33, var(--primary));
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .contact-info i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-balance-scale logo-icon"></i>
+            <div>
+                <div class="logo-text">Biblioteca de Derecho</div>
+                <div class="logo-subtext">República de Nicaragua</div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="#constitucional">Constitucional</a></li>
+                <li><a href="#civil">Civil</a></li>
+                <li><a href="#penal">Penal</a></li>
+                <li><a href="#procesal">Procesal</a></li>
+                <li><a href="#laboral">Laboral</a></li>
+                <li><a href="#administrativo">Administrativo</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Biblioteca Jurídica de Nicaragua</h1>
+            <p>Recurso oficial para consulta de legislación nacional, jurisprudencia y doctrina legal</p>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Buscar ley, código o documento jurídico...">
+                <button id="search-button"><i class="fas fa-search"></i> Buscar</button>
+                <button id="back-button" style="position:absolute; left:-60px; top:50%; transform:translateY(-50%); background:var(--primary); color:white; border:none; border-radius:50%; width:40px; height:40px; font-size:1.3rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.12); display:none;" title="Regresar">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+            <div id="search-results"></div>
+        
+    </section>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Derecho Constitucional -->
+        <div class="section-title" id="constitucional">
+            <h2>Derecho Constitucional</h2>
+        </div>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Derecho Constitucional">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-book"></i> Legislación Fundamental</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Constitución Política de Nicaragua</div>
+                                <div class="law-description">Carta Magna que establece los principios fundamentales del Estado nicaragüense, los derechos y deberes de los ciudadanos, y la estructura de los poderes públicos.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Justicia Constitucional</div>
+                                <div class="law-description">Regula el funcionamiento de la Corte Suprema de Justicia en materia constitucional y los procesos de control de constitucionalidad.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Emergencia Nacional</div>
+                                <div class="law-description">Establece los procedimientos y facultades del gobierno en situaciones de emergencia nacional.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley Electoral</div>
+                                <div class="law-description">Regula los procesos electorales, los derechos políticos de los ciudadanos y la organización del Consejo Supremo Electoral.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.asamblea.gob.ni/" target="_blank" rel="noopener" class="law-link">
+                        Ver en Asamblea Nacional <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="imagenes de derecho.png/Imagen de WhatsApp 2025-08-02 a las 21.30.25_427914a2.jpg" alt="Imagen de WhatsApp" alt="Jurisprudencia">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-gavel"></i> Jurisprudencia</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Sentencias Constitucionales</div>
+                                <div class="law-description">Colección de las decisiones más relevantes de la Corte Suprema en materia constitucional.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Interpretaciones Constitucionales</div>
+                                <div class="law-description">Análisis y explicaciones sobre la aplicación de los principios constitucionales en casos específicos.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Derechos Fundamentales</div>
+                                <div class="law-description">Estudios y jurisprudencia sobre la protección y garantía de los derechos fundamentales.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Control de Constitucionalidad</div>
+                                <div class="law-description">Mecanismos y procedimientos para garantizar la supremacía constitucional.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.csj.gob.ni/" target="_blank" rel="noopener" class="law-link">
+                        Ver en Corte Suprema <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Derecho Civil -->
+        <div class="section-title" id="civil">
+            <h2>Derecho Civil</h2>
+        </div>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-img">
+                    <img src="imagenes de derecho.png/Imagen de WhatsApp 2025-08-02 a las 21.43.27_e5724959.jpg" alt="Legislación Civil">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-home"></i> Legislación Civil</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Código Civil de Nicaragua</div>
+                                <div class="law-description">Regula las relaciones jurídicas entre personas privadas, incluyendo derechos de propiedad, contratos, obligaciones y familia.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Registro Público</div>
+                                <div class="law-description">Establece la organización y funcionamiento del sistema de registro de propiedades y otros derechos reales.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Propiedad</div>
+                                <div class="law-description">Regula los derechos de propiedad urbana y rural, incluyendo las disposiciones sobre reforma agraria.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Arrendamiento Urbano</div>
+                                <div class="law-description">Normativa que regula las relaciones entre arrendadores y arrendatarios de inmuebles urbanos.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.poderjudicial.gob.ni/" target="_blank" rel="noopener" class="law-link">
+                        Ver en Poder Judicial <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Familia y Sucesiones">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> Familia y Sucesiones</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Alimentos</div>
+                                <div class="law-description">Regula las obligaciones alimentarias entre parientes y los procedimientos para su cumplimiento.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Adopción</div>
+                                <div class="law-description">Establece los procedimientos y requisitos para la adopción de menores en Nicaragua.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Sucesiones</div>
+                                <div class="law-description">Normativa que regula la transmisión de bienes, derechos y obligaciones tras el fallecimiento de una persona.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Divorcio</div>
+                                <div class="law-description">Regula los procedimientos y efectos jurídicos de la disolución del vínculo matrimonial.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="law-link">
+                        Documentos disponibles <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Derecho Penal -->
+        <div class="section-title" id="penal">
+            <h2>Derecho Penal</h2>
+        </div>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-img">
+                    <img src="imagenes de derecho.png/Imagen de WhatsApp 2025-08-02 a las 21.27.46_accf081b.jpg" alt="Legislación Penal">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-handcuffs"></i> Legislación Penal</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Código Penal</div>
+                                <div class="law-description">Recopilación de normas que definen los delitos y establecen las penas correspondientes.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Código Procesal Penal</div>
+                                <div class="law-description">Regula el procedimiento para la investigación y juzgamiento de los delitos.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley del Régimen Penitenciario</div>
+                                <div class="law-description">Establece la organización y funcionamiento del sistema penitenciario nacional.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Ejecución Penal</div>
+                                <div class="law-description">Regula la ejecución de las penas y medidas de seguridad impuestas por los tribunales.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.migob.gob.ni/" target="_blank" rel="noopener" class="law-link">
+                        Ver en Ministerio de Gobernación <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="imagenes de derecho.png/Imagen de WhatsApp 2025-08-02 a las 21.28.43_32a82895.jpg" alt="Delitos Específicos">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-shield-alt"></i> Delitos Específicos</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley contra Crimen Organizado</div>
+                                <div class="law-description">Normativa especial para prevenir, investigar y perseguir el crimen organizado.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley contra la Violencia hacia la Mujer</div>
+                                <div class="law-description">Protección integral para prevenir, sancionar y erradicar la violencia contra las mujeres.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Tráfico Ilícito de Drogas</div>
+                                <div class="law-description">Regula la prevención, investigación y sanción de los delitos relacionados con drogas.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Lavado de Dinero</div>
+                                <div class="law-description">Establece medidas para prevenir, detectar y sancionar el lavado de dinero y financiamiento al terrorismo.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="law-link">
+                        Documentos disponibles <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Derecho Laboral y Seguridad Social -->
+        <div class="section-title" id="laboral">
+            <h2>Derecho Laboral y Seguridad Social</h2>
+        </div>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Legislación Laboral">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-briefcase"></i> Legislación Laboral</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Código del Trabajo</div>
+                                <div class="law-description">Regula las relaciones laborales entre empleadores y trabajadores, derechos y obligaciones de ambas partes.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley de Seguridad Social</div>
+                                <div class="law-description">Establece el sistema de protección social para trabajadores y sus familias.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Ley General de Higiene y Seguridad del Trabajo</div>
+                                <div class="law-description">Normativa para garantizar condiciones laborales seguras y saludables.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Normativa del MITRAB</div>
+                                <div class="law-description">Regulaciones complementarias emitidas por el Ministerio del Trabajo.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.mitrab.gob.ni/" target="_blank" rel="noopener" class="law-link">
+                        Ver en Ministerio del Trabajo <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Tratados Internacionales">
+                </div>
+                <div class="card-header">
+                    <h3><i class="fas fa-globe-americas"></i> Tratados Internacionales</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="law-list">
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Convenios de la OIT</div>
+                                <div class="law-description">Tratados internacionales sobre derechos laborales ratificados por Nicaragua.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Tratados Laborales Regionales</div>
+                                <div class="law-description">Acuerdos regionales sobre cooperación laboral y protección de trabajadores.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Pactos Internacionales de Derechos Humanos</div>
+                                <div class="law-description">Instrumentos internacionales que protegen derechos fundamentales de los trabajadores.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="law-item">
+                                <div class="law-title">Convención Americana de Derechos Humanos</div>
+                                <div class="law-description">Protección de derechos humanos en el ámbito interamericano, incluyendo derechos laborales.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="law-link">
+                        Documentos disponibles <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Biblioteca de Derecho</h3>
+                <p>Recurso oficial para consulta jurídica en Nicaragua. Documentación legislativa actualizada, jurisprudencia y doctrina legal.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Instituciones Relacionadas</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.asamblea.gob.ni/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Asamblea Nacional</a></li>
+                    <li><a href="https://www.poderjudicial.gob.ni/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Poder Judicial</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#constitucional"><i class="fas fa-book"></i> Constitucional</a></li>
+                    <li><a href="#civil"><i class="fas fa-home"></i> Civil</a></li>
+                    <li><a href="#penal"><i class="fas fa-gavel"></i> Penal</a></li>
+                    <li><a href="#procesal"><i class="fas fa-balance-scale"></i> Procesal</a></li>
+                    <li><a href="#laboral"><i class="fas fa-briefcase"></i> Laboral</a></li>
+                    <li><a href="#administrativo"><i class="fas fa-landmark"></i> Administrativo</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 Biblioteca de Derecho de Nicaragua. Todos los derechos reservados.
+        </div>
+    </footer>
+    
+    <script>
+        // Base de datos simulada para el buscador
+        const legalDatabase = [
+            { title: "Constitución Política de Nicaragua", category: "constitucional", description: "Carta Magna que establece los principios fundamentales del Estado nicaragüense, derechos y deberes de los ciudadanos." },
+            { title: "Ley de Justicia Constitucional", category: "constitucional", description: "Regula el funcionamiento de la Corte Suprema de Justicia en materia constitucional y los procesos de control de constitucionalidad." },
+            { title: "Ley Electoral", category: "constitucional", description: "Regula los procesos electorales, los derechos políticos de los ciudadanos y la organización del Consejo Supremo Electoral." },
+            { title: "Ley de Emergencia Nacional", category: "constitucional", description: "Establece los procedimientos y facultades del gobierno en situaciones de emergencia nacional." },
+            { title: "Ley de Amparo", category: "constitucional", description: "Protege los derechos fundamentales de los ciudadanos frente a actos de autoridad." },
+            { title: "Código Penal", category: "penal", description: "Recopilación de normas que definen los delitos y establecen las penas correspondientes." },
+            { title: "Código Procesal Penal", category: "penal", description: "Regula el procedimiento para la investigación y juzgamiento de los delitos." },
+            { title: "Ley del Régimen Penitenciario", category: "penal", description: "Establece la organización y funcionamiento del sistema penitenciario nacional." },
+            { title: "Ley de Ejecución Penal", category: "penal", description: "Regula la ejecución de las penas y medidas de seguridad impuestas por los tribunales." },
+            { title: "Ley contra Crimen Organizado", category: "penal", description: "Normativa especial para prevenir, investigar y perseguir el crimen organizado." },
+            { title: "Ley contra la Violencia hacia la Mujer", category: "penal", description: "Protección integral para prevenir, sancionar y erradicar la violencia contra las mujeres." },
+            { title: "Ley de Tráfico Ilícito de Drogas", category: "penal", description: "Regula la prevención, investigación y sanción de los delitos relacionados con drogas." },
+            { title: "Ley de Lavado de Dinero", category: "penal", description: "Establece medidas para prevenir, detectar y sancionar el lavado de dinero y financiamiento al terrorismo." },
+            { title: "Código Civil de Nicaragua", category: "civil", description: "Regula las relaciones jurídicas entre personas privadas, incluyendo derechos de propiedad, contratos, obligaciones y familia." },
+            { title: "Ley de Registro Público", category: "civil", description: "Establece la organización y funcionamiento del sistema de registro de propiedades y otros derechos reales." },
+            { title: "Ley de Propiedad", category: "civil", description: "Regula los derechos de propiedad urbana y rural, incluyendo las disposiciones sobre reforma agraria." },
+            { title: "Ley de Arrendamiento Urbano", category: "civil", description: "Normativa que regula las relaciones entre arrendadores y arrendatarios de inmuebles urbanos." },
+            { title: "Ley de Alimentos", category: "civil", description: "Regula las obligaciones alimentarias entre parientes y los procedimientos para su cumplimiento." },
+            { title: "Ley de Adopción", category: "civil", description: "Establece los procedimientos y requisitos para la adopción de menores en Nicaragua." },
+            { title: "Ley de Sucesiones", category: "civil", description: "Normativa que regula la transmisión de bienes, derechos y obligaciones tras el fallecimiento de una persona." },
+            { title: "Ley de Divorcio", category: "civil", description: "Regula los procedimientos y efectos jurídicos de la disolución del vínculo matrimonial." },
+            { title: "Código Procesal Civil", category: "procesal", description: "Establece los procedimientos para litigios civiles." },
+            { title: "Ley de Mediación y Arbitraje", category: "procesal", description: "Regula métodos alternativos de resolución de conflictos." },
+            { title: "Ley de Procedimientos Administrativos", category: "procesal", description: "Normas para la tramitación de procedimientos ante la administración pública." },
+            { title: "Manual de Procedimientos Judiciales", category: "procesal", description: "Guía práctica para la tramitación de procesos judiciales en Nicaragua." },
+            { title: "Código del Trabajo", category: "laboral", description: "Regula las relaciones laborales entre empleadores y trabajadores, derechos y obligaciones de ambas partes." },
+            { title: "Ley de Seguridad Social", category: "laboral", description: "Establece el sistema de protección social para trabajadores y sus familias." },
+            { title: "Ley General de Higiene y Seguridad del Trabajo", category: "laboral", description: "Normativa para garantizar condiciones laborales seguras y saludables." },
+            { title: "Normativa del MITRAB", category: "laboral", description: "Regulaciones complementarias emitidas por el Ministerio del Trabajo." },
+            { title: "Convenios de la OIT", category: "laboral", description: "Tratados internacionales sobre derechos laborales ratificados por Nicaragua." },
+            { title: "Tratados Laborales Regionales", category: "laboral", description: "Acuerdos regionales sobre cooperación laboral y protección de trabajadores." },
+            { title: "Pactos Internacionales de Derechos Humanos", category: "laboral", description: "Instrumentos internacionales que protegen derechos fundamentales de los trabajadores." },
+            { title: "Convención Americana de Derechos Humanos", category: "laboral", description: "Protección de derechos humanos en el ámbito interamericano, incluyendo derechos laborales." },
+            { title: "Ley de la Jurisdicción de lo Contencioso Administrativo", category: "administrativo", description: "Normas para la resolución de conflictos entre la administración pública y los ciudadanos." },
+            { title: "Ley de Contrataciones del Estado (Ley 737)", category: "administrativo", description: "Regula los procesos de contratación pública en Nicaragua." },
+            { title: "Ley de la Función Pública", category: "administrativo", description: "Normas sobre el empleo público y los derechos y deberes de los funcionarios." },
+            { title: "Ley General de la Administración Pública", category: "administrativo", description: "Regula la organización y funcionamiento de la administración pública." },
+            { title: "Ley de Municipios", category: "administrativo", description: "Normativa sobre la organización y funcionamiento de los gobiernos locales." },
+            { title: "Ley de Participación Ciudadana", category: "administrativo", description: "Fomenta la participación de la ciudadanía en la gestión pública." },
+            { title: "Ley de Tributación Municipal", category: "administrativo", description: "Normas sobre impuestos y tributos municipales." },
+            { title: "Reglamentos Municipales", category: "administrativo", description: "Disposiciones locales emitidas por los gobiernos municipales." },
+            { title: "Sentencias Constitucionales Relevantes", category: "jurisprudencia", description: "Colección de las decisiones más relevantes de la Corte Suprema en materia constitucional." },
+            { title: "Interpretaciones de la Corte Suprema", category: "jurisprudencia", description: "Análisis y explicaciones sobre la aplicación de los principios constitucionales en casos específicos." },
+            { title: "Análisis de Derechos Fundamentales", category: "jurisprudencia", description: "Estudios y jurisprudencia sobre la protección y garantía de los derechos fundamentales." },
+            { title: "Control de Constitucionalidad", category: "jurisprudencia", description: "Mecanismos y procedimientos para garantizar la supremacía constitucional." },
+            { title: "Jurisprudencia Procesal", category: "jurisprudencia", description: "Sentencias y criterios relevantes en materia procesal." },
+            { title: "Guía de Litigación Oral", category: "jurisprudencia", description: "Recomendaciones y técnicas para la litigación oral en los tribunales nicaragüenses." },
+            { title: "Recursos de Apelación y Casación", category: "jurisprudencia", description: "Normas y procedimientos para la interposición de recursos judiciales." }
+        ];
+
+        // Elementos DOM para buscador y botón regreso
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const backButton = document.getElementById('back-button');
+        const resultsContainer = document.getElementById('search-results');
+
+        // Funcionalidad de búsqueda
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            resultsContainer.innerHTML = '';
+            if (searchTerm === '') {
+                resultsContainer.innerHTML = '';
+                backButton.style.display = 'none';
+                return;
+            }
+            // Buscar en la base de datos
+            const results = legalDatabase.filter(item =>
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm) ||
+                item.category.toLowerCase().includes(searchTerm)
+            );
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <i class='fas fa-search' style='font-size: 2.5rem; color: var(--gray); margin-bottom: 15px;'></i>
+                        <h3 style='color: var(--primary); margin-bottom: 10px;'>No se encontraron resultados</h3>
+                        <p style='color: var(--gray);'>Intente con otros términos de búsqueda</p>
+                    </div>
+                `;
+                backButton.style.display = 'inline-block';
+                return;
+            }
+            // Mostrar resultados en una lista
+            let html = `<ul style="list-style:none; padding:0;">`;
+            results.forEach(item => {
+                // Resaltar término
+                const regex = new RegExp(searchTerm, 'gi');
+                const title = item.title.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
+                const desc = item.description.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
+                html += `<li style="background:#fff; margin-bottom:18px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:18px 22px;">
+                    <strong style="font-size:1.1rem; color:var(--primary);">${title}</strong><br>
+                    <span style="color:var(--gray); font-size:0.98rem;">${desc}</span><br>
+                    <span style="font-size:0.92rem; color:var(--secondary); font-weight:500;">Categoría: ${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</span>
+                </li>`;
+            });
+            html += `</ul>`;
+            resultsContainer.innerHTML = html;
+            backButton.style.display = 'inline-block';
+        }
+
+        // Event listeners
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        backButton.addEventListener('click', () => {
+            searchInput.value = '';
+            resultsContainer.innerHTML = '';
+            backButton.style.display = 'none';
+            searchInput.focus();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    // Update active nav link
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
