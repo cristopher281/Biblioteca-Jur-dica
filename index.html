@@ -6,6 +6,184 @@
     <title>Biblioteca de Derecho de Nicaragua</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Modo oscuro */
+        body.dark-mode {
+            background: linear-gradient(135deg, #23272f 0%, #181c22 100%);
+            color: #f8f9fa;
+        }
+        body.dark-mode header,
+        body.dark-mode footer {
+            background: linear-gradient(to right, #181c22, #003366);
+            color: #f8f9fa;
+        }
+        body.dark-mode .card {
+            background: #23272f;
+            color: #f8f9fa;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        body.dark-mode .card-header {
+            background: #003366;
+        }
+        body.dark-mode .card-footer {
+            background: #222b36;
+        }
+        body.dark-mode .law-link {
+            color: #D4AF37;
+        }
+        body.dark-mode .law-link:hover {
+            color: #8B0000;
+        }
+        body.dark-mode .section-title h2 {
+            -webkit-text-fill-color: #D4AF37;
+        }
+        body.dark-mode .search-container input {
+            background: #23272f;
+            color: #f8f9fa;
+        }
+        body.dark-mode .search-container button {
+            background: #8B0000;
+        }
+        body.dark-mode .search-container button:hover {
+            background: #D4AF37;
+            color: #003366;
+        }
+        body.dark-mode .footer-links a {
+            color: #D4AF37;
+        }
+        body.dark-mode .footer-links a:hover {
+            color: #fff;
+        }
+        body.dark-mode .copyright {
+            color: #aaa;
+        }
+
+        /* Fondo sutil en secciones */
+        .container {
+            background: rgba(255,255,255,0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        body.dark-mode .container {
+            background: rgba(35,39,47,0.95);
+        }
+
+        /* Animaciones suaves */
+        .card, .card-img img, .law-link, .card-header, .card-footer, .section-title h2, .footer-links a, .search-container input, .search-container button {
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* Menú hamburguesa */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+        .hamburger span {
+            height: 4px;
+            width: 28px;
+            background: var(--accent);
+            margin: 3px 0;
+            border-radius: 2px;
+            display: block;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+        }
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: linear-gradient(to right, var(--primary), #001a33);
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 220px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+                border-radius: 0 0 0 18px;
+                z-index: 150;
+            }
+            nav ul.open {
+                display: flex;
+            }
+        }
+
+        /* Botón ir arriba */
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.7rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        #scrollTopBtn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-5px) scale(1.08);
+        }
+
+        /* Frases célebres */
+        .frase-celebre {
+            margin: 2.5rem auto 3.5rem auto;
+            max-width: 700px;
+            background: linear-gradient(90deg, #e3f2fd 60%, #fff 100%);
+            border-left: 6px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem 2.2rem;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--dark);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            position: relative;
+        }
+        .frase-celebre cite {
+            display: block;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--secondary);
+            text-align: right;
+        }
+        body.dark-mode .frase-celebre {
+            background: linear-gradient(90deg, #23272f 60%, #181c22 100%);
+            color: #f8f9fa;
+        }
+
+        /* Filtros avanzados buscador */
+        .filtros-busqueda {
+            display: flex;
+            gap: 12px;
+            margin: 1rem 0 0.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .filtros-busqueda select {
+            padding: 7px 18px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            background: #fff;
+            color: var(--primary);
+            transition: border 0.3s;
+        }
+        body.dark-mode .filtros-busqueda select {
+            background: #23272f;
+            color: #D4AF37;
+            border: 1px solid #444;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -473,6 +651,11 @@
 <body>
     <!-- Header -->
     <header>
+        <div class="hamburger" id="hamburger-menu" title="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div class="logo">
             <i class="fas fa-balance-scale logo-icon"></i>
             <div>
@@ -495,10 +678,26 @@
     
     <!-- Hero Section -->
     <section class="hero">
+        <div class="frase-celebre">
+            “La ley debe ser como la muerte, que no exceptúa a nadie.”
+            <cite>- Montesquieu</cite>
+        </div>
         <div class="hero-content">
             <h1>Biblioteca Jurídica de Nicaragua</h1>
             <p>Recurso oficial para consulta de legislación nacional, jurisprudencia y doctrina legal</p>
             
+            <div class="filtros-busqueda">
+                <select id="filtro-categoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="constitucional">Constitucional</option>
+                    <option value="civil">Civil</option>
+                    <option value="penal">Penal</option>
+                    <option value="procesal">Procesal</option>
+                    <option value="laboral">Laboral</option>
+                    <option value="administrativo">Administrativo</option>
+                    <option value="jurisprudencia">Jurisprudencia</option>
+                </select>
+            </div>
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Buscar ley, código o documento jurídico...">
                 <button id="search-button"><i class="fas fa-search"></i> Buscar</button>
@@ -905,8 +1104,54 @@
         </div>
     </footer>
     
+    <button id="scrollTopBtn" title="Ir arriba"><i class="fas fa-arrow-up"></i></button>
     <script>
-        // Base de datos simulada para el buscador
+        // Botón modo oscuro
+        const darkModeBtn = document.createElement('button');
+        darkModeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        darkModeBtn.title = 'Modo oscuro/claro';
+        darkModeBtn.style.background = 'none';
+        darkModeBtn.style.border = 'none';
+        darkModeBtn.style.color = 'var(--accent)';
+        darkModeBtn.style.fontSize = '1.5rem';
+        darkModeBtn.style.cursor = 'pointer';
+        darkModeBtn.style.marginLeft = '18px';
+        document.querySelector('header').appendChild(darkModeBtn);
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('modoOscuro', document.body.classList.contains('dark-mode'));
+        });
+        // Mantener modo oscuro si estaba activado
+        if(localStorage.getItem('modoOscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Menú hamburguesa responsive
+        const hamburger = document.getElementById('hamburger-menu');
+        const navUl = document.querySelector('nav ul');
+        hamburger.addEventListener('click', () => {
+            navUl.classList.toggle('open');
+        });
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navUl.contains(e.target)) {
+                navUl.classList.remove('open');
+            }
+        });
+
+        // Botón ir arriba
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 300) {
+                scrollTopBtn.style.display = 'block';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({top:0, behavior:'smooth'});
+        });
+
         const legalDatabase = [
             { title: "Constitución Política de Nicaragua", category: "constitucional", description: "Carta Magna que establece los principios fundamentales del Estado nicaragüense, derechos y deberes de los ciudadanos." },
             { title: "Ley de Justicia Constitucional", category: "constitucional", description: "Regula el funcionamiento de la Corte Suprema de Justicia en materia constitucional y los procesos de control de constitucionalidad." },
@@ -964,21 +1209,25 @@
         const backButton = document.getElementById('back-button');
         const resultsContainer = document.getElementById('search-results');
 
-        // Funcionalidad de búsqueda
+        // Funcionalidad de búsqueda con filtro
         function performSearch() {
             const searchTerm = searchInput.value.trim().toLowerCase();
+            const filtroCategoria = document.getElementById('filtro-categoria').value;
             resultsContainer.innerHTML = '';
-            if (searchTerm === '') {
+            if (searchTerm === '' && !filtroCategoria) {
                 resultsContainer.innerHTML = '';
                 backButton.style.display = 'none';
                 return;
             }
             // Buscar en la base de datos
-            const results = legalDatabase.filter(item =>
-                item.title.toLowerCase().includes(searchTerm) ||
-                item.description.toLowerCase().includes(searchTerm) ||
-                item.category.toLowerCase().includes(searchTerm)
-            );
+            const results = legalDatabase.filter(item => {
+                const coincideTermino = searchTerm === '' ||
+                    item.title.toLowerCase().includes(searchTerm) ||
+                    item.description.toLowerCase().includes(searchTerm) ||
+                    item.category.toLowerCase().includes(searchTerm);
+                const coincideCategoria = !filtroCategoria || item.category === filtroCategoria;
+                return coincideTermino && coincideCategoria;
+            });
             if (results.length === 0) {
                 resultsContainer.innerHTML = `
                     <div style="text-align: center; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
@@ -994,9 +1243,13 @@
             let html = `<ul style="list-style:none; padding:0;">`;
             results.forEach(item => {
                 // Resaltar término
-                const regex = new RegExp(searchTerm, 'gi');
-                const title = item.title.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
-                const desc = item.description.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
+                let title = item.title;
+                let desc = item.description;
+                if(searchTerm) {
+                    const regex = new RegExp(searchTerm, 'gi');
+                    title = item.title.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
+                    desc = item.description.replace(regex, match => `<span style='background-color:#ffeb3b; border-radius:4px;'>${match}</span>`);
+                }
                 html += `<li style="background:#fff; margin-bottom:18px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:18px 22px;">
                     <strong style="font-size:1.1rem; color:var(--primary);">${title}</strong><br>
                     <span style="color:var(--gray); font-size:0.98rem;">${desc}</span><br>
@@ -1013,8 +1266,10 @@
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') performSearch();
         });
+        document.getElementById('filtro-categoria').addEventListener('change', performSearch);
         backButton.addEventListener('click', () => {
             searchInput.value = '';
+            document.getElementById('filtro-categoria').value = '';
             resultsContainer.innerHTML = '';
             backButton.style.display = 'none';
             searchInput.focus();
